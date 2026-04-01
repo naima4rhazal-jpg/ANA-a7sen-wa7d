@@ -3,393 +3,488 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>أسئلة محرجة</title>
+  <title>هل تحبني؟</title>
   <style>
     :root {
-      --bg: #fff7f1;
-      --ink: #22181c;
-      --accent: #ff6b6b;
-      --accent-2: #ffd166;
-      --panel: rgba(255, 255, 255, 0.75);
-      --line: rgba(34, 24, 28, 0.1);
-      --yes: #138a5d;
-      --no: #b42346;
-      --muted: #6b5a60;
-      --shadow: 0 22px 50px rgba(62, 33, 42, 0.16);
+      --bg-1: #12051a;
+      --bg-2: #3a0f35;
+      --bg-3: #8f1d4e;
+      --glass: rgba(255, 255, 255, 0.12);
+      --line: rgba(255, 255, 255, 0.16);
+      --soft: rgba(255, 240, 246, 0.82);
+      --gold: #ffd6a5;
+      --pink: #ff7aa8;
+      --yes-a: #ffe2b6;
+      --yes-b: #ff79a6;
+      --no-a: rgba(255, 255, 255, 0.14);
+      --no-b: rgba(255, 255, 255, 0.08);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       margin: 0;
       min-height: 100vh;
       font-family: "Tahoma", "Segoe UI", sans-serif;
-      color: var(--ink);
+      color: #fffafc;
       background:
-        radial-gradient(circle at top right, rgba(255, 209, 102, 0.35), transparent 22%),
-        radial-gradient(circle at bottom left, rgba(255, 107, 107, 0.22), transparent 28%),
-        linear-gradient(160deg, #fffaf5, #ffe9e4 48%, #fff2de);
+        radial-gradient(circle at 10% 20%, rgba(255, 214, 165, 0.18), transparent 20%),
+        radial-gradient(circle at 85% 15%, rgba(255, 122, 168, 0.24), transparent 18%),
+        radial-gradient(circle at 50% 90%, rgba(255,255,255,0.08), transparent 24%),
+        linear-gradient(140deg, var(--bg-1), var(--bg-2) 48%, var(--bg-3));
+      overflow-x: hidden;
     }
 
-    .wrap {
-      width: min(1180px, calc(100% - 28px));
+    .sparkles,
+    .hearts-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .sparkle,
+    .float-heart {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .sparkle {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.85);
+      animation: twinkle 6s linear infinite;
+    }
+
+    .float-heart {
+      bottom: -30px;
+      color: rgba(255, 219, 230, 0.32);
+      font-size: clamp(16px, 2vw, 24px);
+      animation: rise 12s linear infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.1; transform: scale(0.6); }
+      50% { opacity: 0.95; transform: scale(1.15); }
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(0.9); opacity: 0; }
+      12% { opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.25) rotate(15deg); opacity: 0; }
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(1140px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 28px 0 40px;
+      padding: 34px 0 42px;
     }
 
     .hero {
-      background: linear-gradient(135deg, rgba(255,255,255,0.78), rgba(255,255,255,0.58));
-      border: 1px solid rgba(255,255,255,0.8);
-      border-radius: 30px;
-      padding: 30px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero::after {
-      content: "?";
-      position: absolute;
-      left: 24px;
-      top: -10px;
-      font-size: clamp(90px, 16vw, 170px);
-      color: rgba(255, 107, 107, 0.08);
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 9px 16px;
-      border-radius: 999px;
-      background: rgba(255, 107, 107, 0.12);
-      color: #b83e52;
-      font-weight: 700;
-      font-size: 14px;
-      margin-bottom: 16px;
-    }
-
-    h1 {
-      margin: 0 0 12px;
-      font-size: clamp(32px, 5vw, 58px);
-      line-height: 1.1;
-    }
-
-    .hero p {
-      margin: 0;
-      max-width: 760px;
-      line-height: 1.9;
-      color: var(--muted);
-      font-size: 18px;
-    }
-
-    .layout {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.08fr 0.92fr;
       gap: 22px;
-      margin-top: 22px;
+      align-items: stretch;
     }
 
     .panel {
-      background: var(--panel);
-      border: 1px solid rgba(255,255,255,0.8);
-      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08));
+      border: 1px solid var(--line);
+      border-radius: 30px;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px);
     }
 
-    .questions {
-      padding: 24px;
+    .hero-copy,
+    .side-board,
+    .celebrate {
+      padding: 30px;
     }
 
-    .section-title {
-      display: flex;
+    .badge {
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .section-title h2 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    .section-title span {
-      color: var(--muted);
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: var(--gold);
+      border: 1px solid rgba(255,255,255,0.14);
       font-size: 14px;
     }
 
-    .question-card {
-      padding: 20px;
-      border-radius: 22px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
-      margin-bottom: 14px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(36px, 6vw, 70px);
+      line-height: 1.06;
     }
 
-    .question-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 30px rgba(62, 33, 42, 0.08);
+    .lead {
+      margin: 0;
+      color: var(--soft);
+      line-height: 1.95;
+      font-size: 18px;
+      max-width: 660px;
     }
 
-    .question-card h3 {
-      margin: 0 0 15px;
-      font-size: 20px;
-      line-height: 1.7;
+    .question-stage {
+      margin-top: 24px;
+      padding: 28px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    .buttons {
+    .question-stage::before {
+      content: "؟";
+      position: absolute;
+      left: 18px;
+      top: -10px;
+      font-size: clamp(70px, 12vw, 140px);
+      color: rgba(255,255,255,0.05);
+      font-weight: 700;
+    }
+
+    .question {
+      margin: 0 0 18px;
+      font-size: clamp(28px, 4.8vw, 48px);
+    }
+
+    .button-row {
       display: flex;
-      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
       flex-wrap: wrap;
+      min-height: 140px;
     }
 
     button {
       border: 0;
-      padding: 12px 18px;
-      border-radius: 15px;
       cursor: pointer;
       font-weight: 700;
-      font-size: 15px;
-      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.25s ease, width 0.25s ease, height 0.25s ease, font-size 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
     }
 
-    button:hover {
-      transform: translateY(-2px);
+    .yes-btn,
+    .no-btn {
+      border-radius: 24px;
+      min-width: 170px;
+      min-height: 68px;
+      font-size: 20px;
+      padding: 16px 26px;
     }
 
     .yes-btn {
-      background: rgba(19, 138, 93, 0.12);
-      color: var(--yes);
-      box-shadow: 0 10px 20px rgba(19, 138, 93, 0.12);
+      background: linear-gradient(135deg, var(--yes-a), var(--yes-b));
+      color: #4c1230;
+      box-shadow: 0 18px 38px rgba(255, 122, 168, 0.32);
     }
 
     .no-btn {
-      background: rgba(180, 35, 70, 0.1);
-      color: var(--no);
-      box-shadow: 0 10px 20px rgba(180, 35, 70, 0.12);
+      background: linear-gradient(180deg, var(--no-a), var(--no-b));
+      color: #fff7fa;
+      border: 1px solid rgba(255,255,255,0.18);
     }
 
-    .result-tag {
-      display: inline-flex;
-      margin-top: 12px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      color: #6d4c57;
-      background: rgba(255, 209, 102, 0.24);
+    .status {
+      margin-top: 16px;
+      color: rgba(255, 245, 249, 0.88);
+      font-size: 16px;
+      min-height: 28px;
     }
 
-    .board {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
+    .side-board h2,
+    .celebrate h2 {
+      margin: 0 0 16px;
+      font-size: 30px;
     }
 
-    .summary {
+    .metrics {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 14px;
+      margin-bottom: 18px;
     }
 
     .metric {
       padding: 18px;
       border-radius: 22px;
-      background: rgba(255,255,255,0.7);
-      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.11);
       text-align: center;
     }
 
     .metric strong {
       display: block;
-      font-size: 32px;
+      font-size: 34px;
+      color: var(--gold);
       margin-bottom: 6px;
     }
 
-    .metric small {
-      color: var(--muted);
-      font-size: 14px;
+    .metric span {
+      color: var(--soft);
+      font-size: 15px;
     }
 
-    .answers-list {
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
+    .people-list {
+      padding: 18px;
       border-radius: 24px;
-      padding: 16px;
-      min-height: 280px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      min-height: 260px;
     }
 
-    .answers-list h3 {
-      margin: 0 0 14px;
+    .people-list h3 {
+      margin: 0 0 12px;
       font-size: 22px;
     }
 
-    .answer-item {
-      padding: 14px 0;
-      border-bottom: 1px dashed rgba(34, 24, 28, 0.12);
+    .entry {
+      padding: 13px 0;
+      border-bottom: 1px dashed rgba(255,255,255,0.12);
     }
 
-    .answer-item:last-child {
+    .entry:last-child {
       border-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .answer-item strong {
-      display: inline-block;
-      margin-left: 8px;
     }
 
     .pill {
       display: inline-block;
-      padding: 6px 10px;
+      padding: 6px 11px;
       border-radius: 999px;
       font-size: 12px;
       font-weight: 700;
+      margin-right: 8px;
     }
 
     .pill.yes {
-      color: var(--yes);
-      background: rgba(19, 138, 93, 0.12);
+      color: #64263d;
+      background: rgba(255, 214, 165, 0.95);
     }
 
     .pill.no {
-      color: var(--no);
-      background: rgba(180, 35, 70, 0.1);
+      color: #fff2f6;
+      background: rgba(196, 62, 107, 0.56);
     }
 
     .meta {
       display: block;
-      margin-top: 7px;
-      color: var(--muted);
+      margin-top: 8px;
+      color: rgba(255,240,246,0.68);
       font-size: 13px;
     }
 
-    .tools {
+    .empty {
+      margin: 0;
+      color: rgba(255,240,246,0.74);
+      line-height: 1.9;
+    }
+
+    .actions {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+      margin-top: 18px;
     }
 
-    .tool-btn {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #3d2227;
-      box-shadow: 0 14px 30px rgba(255, 107, 107, 0.22);
+    .tool {
+      padding: 12px 18px;
+      border-radius: 16px;
+      font-size: 15px;
+      background: rgba(255,255,255,0.1);
+      color: #fff7fa;
+      border: 1px solid rgba(255,255,255,0.14);
     }
 
-    .ghost-btn {
-      background: rgba(255,255,255,0.82);
-      color: #6b4350;
-      border: 1px solid var(--line);
+    .tool.primary {
+      background: linear-gradient(135deg, #ffd6a5, #ff8bb3);
+      color: #4f1731;
+      box-shadow: 0 14px 30px rgba(255, 139, 179, 0.25);
     }
 
-    .empty {
-      color: var(--muted);
+    .celebrate {
+      margin-top: 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .celebrate p {
+      margin: 0 auto;
+      max-width: 760px;
+      color: var(--soft);
       line-height: 1.9;
-      margin: 0;
+      font-size: 18px;
+    }
+
+    .final-message {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 18px 24px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.14);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .final-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .burst {
+      position: fixed;
+      font-size: 22px;
+      pointer-events: none;
+      animation: burst 1s ease forwards;
+      z-index: 20;
+    }
+
+    @keyframes burst {
+      0% {
+        transform: translate(0, 0) scale(0.5);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--dx), var(--dy)) scale(1.4);
+        opacity: 0;
+      }
     }
 
     @media (max-width: 920px) {
-      .layout {
+      .hero {
         grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 640px) {
-      .hero,
-      .questions,
-      .board {
+    @media (max-width: 620px) {
+      .hero-copy,
+      .side-board,
+      .celebrate,
+      .question-stage {
         padding: 20px;
       }
 
-      .summary {
+      .metrics {
         grid-template-columns: 1fr;
-      }
-
-      h1 {
-        font-size: 34px;
       }
     }
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <section class="hero">
-      <div class="badge">لعبة أسئلة محرجة</div>
-      <h1>جاوب بصراحة... نعم أم لا؟</h1>
-      <p>
-        اختر الإجابة على الأسئلة المحرجة، وستظهر الردود في لوحة "إجابات الناس"
-        أسفل الصفحة. هذه النسخة تحفظ الإجابات داخل نفس المتصفح والجهاز.
-      </p>
-    </section>
+  <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+  <div class="hearts-layer" id="heartsLayer" aria-hidden="true"></div>
 
-    <section class="layout">
-      <div class="panel questions">
-        <div class="section-title">
-          <h2>الأسئلة</h2>
-          <span>اختر إجابة لكل سؤال</span>
+  <main class="page">
+    <section class="hero">
+      <div class="panel hero-copy">
+        <div class="badge">تجربة حب تفاعلية</div>
+        <h1>هل تحبني؟</h1>
+        <p class="lead">
+          جاوب بصراحة... لكن انتبه، كل ضغطة على <strong>لا</strong> ستجعل
+          <strong>نعم</strong> أكبر وأقوى، بينما <strong>لا</strong> ستصغر
+          بالتدريج. وفي الجهة الأخرى ستشاهد عدد الإجابات المسجلة.
+        </p>
+
+        <div class="question-stage">
+          <h2 class="question">هل تحبني؟</h2>
+          <div class="button-row">
+            <button class="yes-btn" id="yesBtn" type="button">نعم</button>
+            <button class="no-btn" id="noBtn" type="button">لا</button>
+          </div>
+          <div class="status" id="statusText">اختر إجابتك الآن</div>
         </div>
-        <div id="questionsContainer"></div>
       </div>
 
-      <aside class="panel board">
-        <div class="section-title">
-          <h2>إجابات الناس</h2>
-          <span>مخزنة محليًا</span>
-        </div>
-
-        <div class="summary">
+      <aside class="panel side-board">
+        <h2>إجابات الناس</h2>
+        <div class="metrics">
           <div class="metric">
             <strong id="yesCount">0</strong>
-            <small>عدد نعم</small>
+            <span>ضغطوا نعم</span>
           </div>
           <div class="metric">
             <strong id="noCount">0</strong>
-            <small>عدد لا</small>
+            <span>ضغطوا لا</span>
           </div>
         </div>
 
-        <div class="answers-list">
-          <h3>آخر الردود</h3>
+        <div class="people-list">
+          <h3>آخر الإجابات</h3>
           <div id="answersList">
-            <p class="empty">لا توجد إجابات حتى الآن. ابدأ بالضغط على نعم أو لا.</p>
+            <p class="empty">لا توجد إجابات بعد. أول شخص سيظهر هنا.</p>
           </div>
         </div>
 
-        <div class="tools">
-          <button class="tool-btn" id="fillDemo">إضافة إجابات تجريبية</button>
-          <button class="ghost-btn" id="clearAll">مسح كل الإجابات</button>
+        <div class="actions">
+          <button class="tool primary" id="demoBtn" type="button">إضافة ردود تجريبية</button>
+          <button class="tool" id="clearBtn" type="button">مسح الإجابات</button>
         </div>
       </aside>
+    </section>
+
+    <section class="panel celebrate">
+      <h2>كل الطرق تؤدي إلى نعم</h2>
+      <p>
+        أضفت مؤثرات بصرية ولمعانًا وقلوبًا متحركة حتى تبدو الصفحة ممتعة وأكثر
+        جاذبية، ومع كل تفاعل ستتجدد الحركة على الشاشة.
+      </p>
+      <div class="final-message" id="finalMessage">
+        الحب انتصر... وكانت الإجابة الأجمل هي نعم.
+      </div>
     </section>
   </main>
 
   <script>
-    const questions = [
-      "هل سبق وأعجبت بشخص ولم تخبره؟",
-      "هل فتشت يومًا في هاتف شخص قريب منك؟",
-      "هل كذبت كذبة كبيرة ثم ندمت عليها؟",
-      "هل شعرت بالغيرة من صديق لك؟",
-      "هل تجاهلت رسالة وأنت قادر على الرد؟",
-      "هل أحببت شخصين في نفس الفترة؟"
-    ];
-
-    const storageKey = "awkward_questions_answers_v1";
-    const questionsContainer = document.getElementById("questionsContainer");
-    const answersList = document.getElementById("answersList");
+    const storageKey = "love_question_answers_v1";
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
     const yesCount = document.getElementById("yesCount");
     const noCount = document.getElementById("noCount");
-    const fillDemo = document.getElementById("fillDemo");
-    const clearAll = document.getElementById("clearAll");
+    const answersList = document.getElementById("answersList");
+    const statusText = document.getElementById("statusText");
+    const finalMessage = document.getElementById("finalMessage");
+    const demoBtn = document.getElementById("demoBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const sparkles = document.getElementById("sparkles");
+    const heartsLayer = document.getElementById("heartsLayer");
+
+    let noPressStreak = 0;
+
+    function initBackground() {
+      for (let index = 0; index < 18; index += 1) {
+        const star = document.createElement("span");
+        star.className = "sparkle";
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.animationDelay = `${Math.random() * 6}s`;
+        star.style.animationDuration = `${4 + Math.random() * 4}s`;
+        sparkles.appendChild(star);
+      }
+
+      for (let index = 0; index < 10; index += 1) {
+        const heart = document.createElement("span");
+        heart.className = "float-heart";
+        heart.textContent = "❤";
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.animationDelay = `${Math.random() * 9}s`;
+        heart.style.animationDuration = `${9 + Math.random() * 5}s`;
+        heartsLayer.appendChild(heart);
+      }
+    }
 
     function readAnswers() {
       try {
@@ -403,7 +498,7 @@
       localStorage.setItem(storageKey, JSON.stringify(answers));
     }
 
-    function formatTime(dateString) {
+    function formatDate(dateString) {
       return new Date(dateString).toLocaleString("ar-MA", {
         year: "numeric",
         month: "short",
@@ -413,41 +508,14 @@
       });
     }
 
-    function submitAnswer(question, answer) {
+    function addAnswer(answer) {
       const answers = readAnswers();
       answers.unshift({
-        question,
         answer,
         createdAt: new Date().toISOString()
       });
       saveAnswers(answers);
       renderBoard();
-    }
-
-    function renderQuestions() {
-      questionsContainer.innerHTML = "";
-
-      questions.forEach((question, index) => {
-        const card = document.createElement("article");
-        card.className = "question-card";
-
-        card.innerHTML = `
-          <h3>${index + 1}. ${question}</h3>
-          <div class="buttons">
-            <button class="yes-btn" type="button">نعم</button>
-            <button class="no-btn" type="button">لا</button>
-          </div>
-          <span class="result-tag">كل ضغطة تُضاف إلى اللوحة الجانبية</span>
-        `;
-
-        const yesButton = card.querySelector(".yes-btn");
-        const noButton = card.querySelector(".no-btn");
-
-        yesButton.addEventListener("click", () => submitAnswer(question, "نعم"));
-        noButton.addEventListener("click", () => submitAnswer(question, "لا"));
-
-        questionsContainer.appendChild(card);
-      });
     }
 
     function renderBoard() {
@@ -459,37 +527,118 @@
       noCount.textContent = noTotal;
 
       if (!answers.length) {
-        answersList.innerHTML = '<p class="empty">لا توجد إجابات حتى الآن. ابدأ بالضغط على نعم أو لا.</p>';
+        answersList.innerHTML = '<p class="empty">لا توجد إجابات بعد. أول شخص سيظهر هنا.</p>';
         return;
       }
 
-      answersList.innerHTML = answers.slice(0, 12).map((item) => `
-        <div class="answer-item">
-          <strong>${item.question}</strong>
+      answersList.innerHTML = answers.slice(0, 10).map((item, index) => `
+        <div class="entry">
+          <span>شخص ${answers.length - index}</span>
           <span class="pill ${item.answer === "نعم" ? "yes" : "no"}">${item.answer}</span>
-          <span class="meta">تمت الإضافة: ${formatTime(item.createdAt)}</span>
+          <span class="meta">الوقت: ${formatDate(item.createdAt)}</span>
         </div>
       `).join("");
     }
 
-    fillDemo.addEventListener("click", () => {
+    function updateButtons() {
+      const yesScale = Math.min(1 + noPressStreak * 0.18, 2.8);
+      const noScale = Math.max(1 - noPressStreak * 0.14, 0.28);
+
+      yesBtn.style.transform = `scale(${yesScale})`;
+      noBtn.style.transform = `scale(${noScale})`;
+      yesBtn.style.minWidth = `${170 + noPressStreak * 24}px`;
+      yesBtn.style.minHeight = `${68 + noPressStreak * 10}px`;
+      yesBtn.style.fontSize = `${20 + noPressStreak * 2}px`;
+      noBtn.style.minWidth = "170px";
+      noBtn.style.minHeight = "68px";
+      noBtn.style.fontSize = "20px";
+      noBtn.style.opacity = `${Math.max(1 - noPressStreak * 0.12, 0.2)}`;
+
+      if (noPressStreak >= 5) {
+        statusText.textContent = "زر نعم صار مغريًا جدًا الآن...";
+      } else if (noPressStreak > 0) {
+        statusText.textContent = "لماذا لا؟ جرب نعم بدلًا منها";
+      } else {
+        statusText.textContent = "اختر إجابتك الآن";
+      }
+    }
+
+    function createBurst(x, y, symbol) {
+      for (let index = 0; index < 10; index += 1) {
+        const piece = document.createElement("span");
+        piece.className = "burst";
+        piece.textContent = symbol;
+        piece.style.left = `${x}px`;
+        piece.style.top = `${y}px`;
+        piece.style.setProperty("--dx", `${(Math.random() - 0.5) * 180}px`);
+        piece.style.setProperty("--dy", `${-40 - Math.random() * 140}px`);
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 1000);
+      }
+    }
+
+    function clickCenter(element) {
+      const rect = element.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+      };
+    }
+
+    yesBtn.addEventListener("click", () => {
+      addAnswer("نعم");
+      noPressStreak = 0;
+      updateButtons();
+      statusText.textContent = "أجمل إجابة وصلت: نعم 🥰";
+      finalMessage.classList.add("show");
+      const point = clickCenter(yesBtn);
+      createBurst(point.x, point.y, "🥰");
+    });
+
+    noBtn.addEventListener("click", () => {
+      addAnswer("لا");
+      noPressStreak += 1;
+      updateButtons();
+      const point = clickCenter(noBtn);
+      createBurst(point.x, point.y, "😭");
+
+      if (noPressStreak >= 7) {
+        noBtn.textContent = "صغيرة جدًا";
+      }
+
+      if (noPressStreak >= 9) {
+        noBtn.style.pointerEvents = "none";
+        statusText.textContent = "زر لا اختفى تقريبًا... بقيت نعم فقط 🥰";
+      } else {
+        statusText.textContent = "لا؟ هذا محزن فعلًا... 😭";
+      }
+    });
+
+    demoBtn.addEventListener("click", () => {
+      const now = Date.now();
       const demoAnswers = [
-        { question: questions[0], answer: "نعم", createdAt: new Date().toISOString() },
-        { question: questions[2], answer: "لا", createdAt: new Date(Date.now() - 1000 * 60 * 8).toISOString() },
-        { question: questions[4], answer: "نعم", createdAt: new Date(Date.now() - 1000 * 60 * 17).toISOString() }
+        { answer: "نعم", createdAt: new Date(now).toISOString() },
+        { answer: "لا", createdAt: new Date(now - 1000 * 60 * 4).toISOString() },
+        { answer: "نعم", createdAt: new Date(now - 1000 * 60 * 11).toISOString() },
+        { answer: "نعم", createdAt: new Date(now - 1000 * 60 * 17).toISOString() }
       ];
-
-      const answers = [...demoAnswers, ...readAnswers()];
-      saveAnswers(answers);
+      saveAnswers([...demoAnswers, ...readAnswers()]);
       renderBoard();
     });
 
-    clearAll.addEventListener("click", () => {
+    clearBtn.addEventListener("click", () => {
       localStorage.removeItem(storageKey);
+      noPressStreak = 0;
+      yesBtn.textContent = "نعم";
+      noBtn.textContent = "لا";
+      noBtn.style.pointerEvents = "auto";
+      finalMessage.classList.remove("show");
+      updateButtons();
       renderBoard();
     });
 
-    renderQuestions();
+    initBackground();
+    updateButtons();
     renderBoard();
   </script>
 </body>
