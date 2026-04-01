@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أسئلة محرجة</title>
+  <style>
+    :root {
+      --bg: #fff7f1;
+      --ink: #22181c;
+      --accent: #ff6b6b;
+      --accent-2: #ffd166;
+      --panel: rgba(255, 255, 255, 0.75);
+      --line: rgba(34, 24, 28, 0.1);
+      --yes: #138a5d;
+      --no: #b42346;
+      --muted: #6b5a60;
+      --shadow: 0 22px 50px rgba(62, 33, 42, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Tahoma", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(255, 209, 102, 0.35), transparent 22%),
+        radial-gradient(circle at bottom left, rgba(255, 107, 107, 0.22), transparent 28%),
+        linear-gradient(160deg, #fffaf5, #ffe9e4 48%, #fff2de);
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(255,255,255,0.78), rgba(255,255,255,0.58));
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 30px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "?";
+      position: absolute;
+      left: 24px;
+      top: -10px;
+      font-size: clamp(90px, 16vw, 170px);
+      color: rgba(255, 107, 107, 0.08);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 9px 16px;
+      border-radius: 999px;
+      background: rgba(255, 107, 107, 0.12);
+      color: #b83e52;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 5vw, 58px);
+      line-height: 1.1;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 760px;
+      line-height: 1.9;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      margin-top: 22px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .questions {
+      padding: 24px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .section-title span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .question-card {
+      padding: 20px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line);
+      margin-bottom: 14px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .question-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(62, 33, 42, 0.08);
+    }
+
+    .question-card h3 {
+      margin: 0 0 15px;
+      font-size: 20px;
+      line-height: 1.7;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 0;
+      padding: 12px 18px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 15px;
+      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .yes-btn {
+      background: rgba(19, 138, 93, 0.12);
+      color: var(--yes);
+      box-shadow: 0 10px 20px rgba(19, 138, 93, 0.12);
+    }
+
+    .no-btn {
+      background: rgba(180, 35, 70, 0.1);
+      color: var(--no);
+      box-shadow: 0 10px 20px rgba(180, 35, 70, 0.12);
+    }
+
+    .result-tag {
+      display: inline-flex;
+      margin-top: 12px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: #6d4c57;
+      background: rgba(255, 209, 102, 0.24);
+    }
+
+    .board {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .metric {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 32px;
+      margin-bottom: 6px;
+    }
+
+    .metric small {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .answers-list {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 16px;
+      min-height: 280px;
+    }
+
+    .answers-list h3 {
+      margin: 0 0 14px;
+      font-size: 22px;
+    }
+
+    .answer-item {
+      padding: 14px 0;
+      border-bottom: 1px dashed rgba(34, 24, 28, 0.12);
+    }
+
+    .answer-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .answer-item strong {
+      display: inline-block;
+      margin-left: 8px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .pill.yes {
+      color: var(--yes);
+      background: rgba(19, 138, 93, 0.12);
+    }
+
+    .pill.no {
+      color: var(--no);
+      background: rgba(180, 35, 70, 0.1);
+    }
+
+    .meta {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .tools {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tool-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #3d2227;
+      box-shadow: 0 14px 30px rgba(255, 107, 107, 0.22);
+    }
+
+    .ghost-btn {
+      background: rgba(255,255,255,0.82);
+      color: #6b4350;
+      border: 1px solid var(--line);
+    }
+
+    .empty {
+      color: var(--muted);
+      line-height: 1.9;
+      margin: 0;
+    }
+
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero,
+      .questions,
+      .board {
+        padding: 20px;
+      }
+
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="badge">لعبة أسئلة محرجة</div>
+      <h1>جاوب بصراحة... نعم أم لا؟</h1>
+      <p>
+        اختر الإجابة على الأسئلة المحرجة، وستظهر الردود في لوحة "إجابات الناس"
+        أسفل الصفحة. هذه النسخة تحفظ الإجابات داخل نفس المتصفح والجهاز.
+      </p>
+    </section>
+
+    <section class="layout">
+      <div class="panel questions">
+        <div class="section-title">
+          <h2>الأسئلة</h2>
+          <span>اختر إجابة لكل سؤال</span>
+        </div>
+        <div id="questionsContainer"></div>
+      </div>
+
+      <aside class="panel board">
+        <div class="section-title">
+          <h2>إجابات الناس</h2>
+          <span>مخزنة محليًا</span>
+        </div>
+
+        <div class="summary">
+          <div class="metric">
+            <strong id="yesCount">0</strong>
+            <small>عدد نعم</small>
+          </div>
+          <div class="metric">
+            <strong id="noCount">0</strong>
+            <small>عدد لا</small>
+          </div>
+        </div>
+
+        <div class="answers-list">
+          <h3>آخر الردود</h3>
+          <div id="answersList">
+            <p class="empty">لا توجد إجابات حتى الآن. ابدأ بالضغط على نعم أو لا.</p>
+          </div>
+        </div>
+
+        <div class="tools">
+          <button class="tool-btn" id="fillDemo">إضافة إجابات تجريبية</button>
+          <button class="ghost-btn" id="clearAll">مسح كل الإجابات</button>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const questions = [
+      "هل سبق وأعجبت بشخص ولم تخبره؟",
+      "هل فتشت يومًا في هاتف شخص قريب منك؟",
+      "هل كذبت كذبة كبيرة ثم ندمت عليها؟",
+      "هل شعرت بالغيرة من صديق لك؟",
+      "هل تجاهلت رسالة وأنت قادر على الرد؟",
+      "هل أحببت شخصين في نفس الفترة؟"
+    ];
+
+    const storageKey = "awkward_questions_answers_v1";
+    const questionsContainer = document.getElementById("questionsContainer");
+    const answersList = document.getElementById("answersList");
+    const yesCount = document.getElementById("yesCount");
+    const noCount = document.getElementById("noCount");
+    const fillDemo = document.getElementById("fillDemo");
+    const clearAll = document.getElementById("clearAll");
+
+    function readAnswers() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey)) || [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveAnswers(answers) {
+      localStorage.setItem(storageKey, JSON.stringify(answers));
+    }
+
+    function formatTime(dateString) {
+      return new Date(dateString).toLocaleString("ar-MA", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function submitAnswer(question, answer) {
+      const answers = readAnswers();
+      answers.unshift({
+        question,
+        answer,
+        createdAt: new Date().toISOString()
+      });
+      saveAnswers(answers);
+      renderBoard();
+    }
+
+    function renderQuestions() {
+      questionsContainer.innerHTML = "";
+
+      questions.forEach((question, index) => {
+        const card = document.createElement("article");
+        card.className = "question-card";
+
+        card.innerHTML = `
+          <h3>${index + 1}. ${question}</h3>
+          <div class="buttons">
+            <button class="yes-btn" type="button">نعم</button>
+            <button class="no-btn" type="button">لا</button>
+          </div>
+          <span class="result-tag">كل ضغطة تُضاف إلى اللوحة الجانبية</span>
+        `;
+
+        const yesButton = card.querySelector(".yes-btn");
+        const noButton = card.querySelector(".no-btn");
+
+        yesButton.addEventListener("click", () => submitAnswer(question, "نعم"));
+        noButton.addEventListener("click", () => submitAnswer(question, "لا"));
+
+        questionsContainer.appendChild(card);
+      });
+    }
+
+    function renderBoard() {
+      const answers = readAnswers();
+      const yesTotal = answers.filter((item) => item.answer === "نعم").length;
+      const noTotal = answers.filter((item) => item.answer === "لا").length;
+
+      yesCount.textContent = yesTotal;
+      noCount.textContent = noTotal;
+
+      if (!answers.length) {
+        answersList.innerHTML = '<p class="empty">لا توجد إجابات حتى الآن. ابدأ بالضغط على نعم أو لا.</p>';
+        return;
+      }
+
+      answersList.innerHTML = answers.slice(0, 12).map((item) => `
+        <div class="answer-item">
+          <strong>${item.question}</strong>
+          <span class="pill ${item.answer === "نعم" ? "yes" : "no"}">${item.answer}</span>
+          <span class="meta">تمت الإضافة: ${formatTime(item.createdAt)}</span>
+        </div>
+      `).join("");
+    }
+
+    fillDemo.addEventListener("click", () => {
+      const demoAnswers = [
+        { question: questions[0], answer: "نعم", createdAt: new Date().toISOString() },
+        { question: questions[2], answer: "لا", createdAt: new Date(Date.now() - 1000 * 60 * 8).toISOString() },
+        { question: questions[4], answer: "نعم", createdAt: new Date(Date.now() - 1000 * 60 * 17).toISOString() }
+      ];
+
+      const answers = [...demoAnswers, ...readAnswers()];
+      saveAnswers(answers);
+      renderBoard();
+    });
+
+    clearAll.addEventListener("click", () => {
+      localStorage.removeItem(storageKey);
+      renderBoard();
+    });
+
+    renderQuestions();
+    renderBoard();
+  </script>
+</body>
+</html>
