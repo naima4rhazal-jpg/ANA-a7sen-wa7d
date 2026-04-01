@@ -3,22 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>هل تحبني؟</title>
+  <title>رسالة حب</title>
   <style>
     :root {
-      --bg-1: #12051a;
-      --bg-2: #3a0f35;
-      --bg-3: #8f1d4e;
-      --glass: rgba(255, 255, 255, 0.12);
-      --line: rgba(255, 255, 255, 0.16);
-      --soft: rgba(255, 240, 246, 0.82);
-      --gold: #ffd6a5;
-      --pink: #ff7aa8;
-      --yes-a: #ffe2b6;
-      --yes-b: #ff79a6;
-      --no-a: rgba(255, 255, 255, 0.14);
-      --no-b: rgba(255, 255, 255, 0.08);
-      --shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+      --bg-1: #160f29;
+      --bg-2: #3b185f;
+      --bg-3: #9b1d57;
+      --gold: #ffd7a8;
+      --rose: #ff7aa2;
+      --soft: rgba(255, 255, 255, 0.78);
+      --card: rgba(255, 248, 252, 0.12);
+      --line: rgba(255, 255, 255, 0.18);
+      --shadow: 0 24px 70px rgba(8, 5, 18, 0.45);
     }
 
     * {
@@ -29,83 +25,109 @@
       margin: 0;
       min-height: 100vh;
       font-family: "Tahoma", "Segoe UI", sans-serif;
-      color: #fffafc;
+      color: #fff9fb;
       background:
-        radial-gradient(circle at 10% 20%, rgba(255, 214, 165, 0.18), transparent 20%),
-        radial-gradient(circle at 85% 15%, rgba(255, 122, 168, 0.24), transparent 18%),
-        radial-gradient(circle at 50% 90%, rgba(255,255,255,0.08), transparent 24%),
-        linear-gradient(140deg, var(--bg-1), var(--bg-2) 48%, var(--bg-3));
+        radial-gradient(circle at 15% 20%, rgba(255, 215, 168, 0.18), transparent 24%),
+        radial-gradient(circle at 80% 15%, rgba(255, 122, 162, 0.24), transparent 20%),
+        radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.08), transparent 22%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2) 45%, var(--bg-3));
       overflow-x: hidden;
     }
 
-    .sparkles,
-    .hearts-layer {
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.45;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    body::before {
+      top: -80px;
+      right: -70px;
+      background: rgba(255, 215, 168, 0.28);
+    }
+
+    body::after {
+      bottom: -100px;
+      left: -80px;
+      background: rgba(255, 122, 162, 0.28);
+    }
+
+    .floating-hearts {
       position: fixed;
       inset: 0;
-      pointer-events: none;
       overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .sparkle,
-    .float-heart {
+    .heart {
       position: absolute;
-      opacity: 0;
-    }
-
-    .sparkle {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 0 18px rgba(255, 255, 255, 0.85);
-      animation: twinkle 6s linear infinite;
-    }
-
-    .float-heart {
-      bottom: -30px;
-      color: rgba(255, 219, 230, 0.32);
-      font-size: clamp(16px, 2vw, 24px);
-      animation: rise 12s linear infinite;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.1; transform: scale(0.6); }
-      50% { opacity: 0.95; transform: scale(1.15); }
+      bottom: -40px;
+      color: rgba(255, 215, 225, 0.28);
+      animation: rise linear infinite;
+      font-size: clamp(14px, 2vw, 24px);
     }
 
     @keyframes rise {
-      0% { transform: translateY(0) scale(0.9); opacity: 0; }
-      12% { opacity: 1; }
-      100% { transform: translateY(-120vh) scale(1.25) rotate(15deg); opacity: 0; }
+      from {
+        transform: translateY(0) scale(0.9);
+        opacity: 0;
+      }
+      12% {
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-115vh) scale(1.2) rotate(18deg);
+        opacity: 0;
+      }
     }
 
     .page {
       position: relative;
       z-index: 1;
-      width: min(1140px, calc(100% - 28px));
+      width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 34px 0 42px;
+      padding: 42px 0 54px;
     }
 
     .hero {
       display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 22px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
       align-items: stretch;
     }
 
     .panel {
+      backdrop-filter: blur(16px);
       background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08));
       border: 1px solid var(--line);
-      border-radius: 30px;
+      border-radius: 28px;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
     }
 
-    .hero-copy,
-    .side-board,
-    .celebrate {
-      padding: 30px;
+    .hero-copy {
+      padding: 42px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::before {
+      content: "LOVE";
+      position: absolute;
+      top: 18px;
+      left: 22px;
+      font-size: clamp(58px, 10vw, 130px);
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.05);
+      font-weight: 700;
     }
 
     .badge {
@@ -114,532 +136,345 @@
       gap: 10px;
       padding: 10px 16px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255,255,255,0.15);
       color: var(--gold);
-      border: 1px solid rgba(255,255,255,0.14);
       font-size: 14px;
     }
 
     h1 {
-      margin: 18px 0 12px;
-      font-size: clamp(36px, 6vw, 70px);
-      line-height: 1.06;
+      margin: 22px 0 16px;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.08;
     }
 
     .lead {
       margin: 0;
-      color: var(--soft);
-      line-height: 1.95;
+      max-width: 600px;
       font-size: 18px;
-      max-width: 660px;
-    }
-
-    .question-stage {
-      margin-top: 24px;
-      padding: 28px;
-      border-radius: 28px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .question-stage::before {
-      content: "؟";
-      position: absolute;
-      left: 18px;
-      top: -10px;
-      font-size: clamp(70px, 12vw, 140px);
-      color: rgba(255,255,255,0.05);
-      font-weight: 700;
-    }
-
-    .question {
-      margin: 0 0 18px;
-      font-size: clamp(28px, 4.8vw, 48px);
-    }
-
-    .button-row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
-      min-height: 140px;
-    }
-
-    button {
-      border: 0;
-      cursor: pointer;
-      font-weight: 700;
-      transition: transform 0.25s ease, width 0.25s ease, height 0.25s ease, font-size 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .yes-btn,
-    .no-btn {
-      border-radius: 24px;
-      min-width: 170px;
-      min-height: 68px;
-      font-size: 20px;
-      padding: 16px 26px;
-    }
-
-    .yes-btn {
-      background: linear-gradient(135deg, var(--yes-a), var(--yes-b));
-      color: #4c1230;
-      box-shadow: 0 18px 38px rgba(255, 122, 168, 0.32);
-    }
-
-    .no-btn {
-      background: linear-gradient(180deg, var(--no-a), var(--no-b));
-      color: #fff7fa;
-      border: 1px solid rgba(255,255,255,0.18);
-    }
-
-    .status {
-      margin-top: 16px;
-      color: rgba(255, 245, 249, 0.88);
-      font-size: 16px;
-      min-height: 28px;
-    }
-
-    .side-board h2,
-    .celebrate h2 {
-      margin: 0 0 16px;
-      font-size: 30px;
-    }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-bottom: 18px;
-    }
-
-    .metric {
-      padding: 18px;
-      border-radius: 22px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.11);
-      text-align: center;
-    }
-
-    .metric strong {
-      display: block;
-      font-size: 34px;
-      color: var(--gold);
-      margin-bottom: 6px;
-    }
-
-    .metric span {
-      color: var(--soft);
-      font-size: 15px;
-    }
-
-    .people-list {
-      padding: 18px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      min-height: 260px;
-    }
-
-    .people-list h3 {
-      margin: 0 0 12px;
-      font-size: 22px;
-    }
-
-    .entry {
-      padding: 13px 0;
-      border-bottom: 1px dashed rgba(255,255,255,0.12);
-    }
-
-    .entry:last-child {
-      border-bottom: 0;
-    }
-
-    .pill {
-      display: inline-block;
-      padding: 6px 11px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      margin-right: 8px;
-    }
-
-    .pill.yes {
-      color: #64263d;
-      background: rgba(255, 214, 165, 0.95);
-    }
-
-    .pill.no {
-      color: #fff2f6;
-      background: rgba(196, 62, 107, 0.56);
-    }
-
-    .meta {
-      display: block;
-      margin-top: 8px;
-      color: rgba(255,240,246,0.68);
-      font-size: 13px;
-    }
-
-    .empty {
-      margin: 0;
-      color: rgba(255,240,246,0.74);
       line-height: 1.9;
+      color: var(--soft);
     }
 
     .actions {
       display: flex;
-      gap: 12px;
       flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    button,
+    .ghost {
+      border: 0;
+      cursor: pointer;
+      padding: 14px 22px;
+      border-radius: 16px;
+      font-size: 16px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, #ffd6a5, #ff7aa2);
+      color: #381125;
+      box-shadow: 0 14px 30px rgba(255, 122, 162, 0.34);
+      font-weight: 700;
+    }
+
+    .ghost {
+      background: rgba(255,255,255,0.08);
+      color: #fff8fb;
+      border: 1px solid rgba(255,255,255,0.14);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button:hover,
+    .ghost:hover {
+      transform: translateY(-3px);
+    }
+
+    .hero-card {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+    }
+
+    .mini-title {
+      color: var(--gold);
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+
+    .letter {
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      padding: 24px;
+      line-height: 2;
+      color: #fff4f8;
+      font-size: 17px;
+    }
+
+    .sign {
+      margin-top: 16px;
+      color: #ffd6df;
+      font-weight: 700;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
       margin-top: 18px;
     }
 
-    .tool {
-      padding: 12px 18px;
-      border-radius: 16px;
-      font-size: 15px;
-      background: rgba(255,255,255,0.1);
-      color: #fff7fa;
-      border: 1px solid rgba(255,255,255,0.14);
-    }
-
-    .tool.primary {
-      background: linear-gradient(135deg, #ffd6a5, #ff8bb3);
-      color: #4f1731;
-      box-shadow: 0 14px 30px rgba(255, 139, 179, 0.25);
-    }
-
-    .celebrate {
-      margin-top: 22px;
+    .stat {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
       text-align: center;
-      position: relative;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      color: var(--gold);
+      margin-bottom: 7px;
+    }
+
+    .section {
+      margin-top: 26px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      padding: 24px;
+      border-radius: 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      transform: translateY(24px);
+      opacity: 0;
+      animation: reveal 0.9s ease forwards;
+    }
+
+    .card:nth-child(2) {
+      animation-delay: 0.12s;
+    }
+
+    .card:nth-child(3) {
+      animation-delay: 0.24s;
+    }
+
+    @keyframes reveal {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+
+    .card p {
+      margin: 0;
+      line-height: 1.9;
+      color: var(--soft);
+    }
+
+    .surprise {
+      margin-top: 26px;
+      padding: 30px;
+      text-align: center;
       overflow: hidden;
     }
 
-    .celebrate p {
+    .surprise h3 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+    }
+
+    .surprise p {
       margin: 0 auto;
-      max-width: 760px;
-      color: var(--soft);
+      max-width: 700px;
       line-height: 1.9;
+      color: var(--soft);
       font-size: 18px;
     }
 
-    .final-message {
-      margin-top: 20px;
+    .secret {
+      margin-top: 22px;
+      padding: 20px 22px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
       display: inline-block;
-      padding: 18px 24px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.14);
+      min-width: min(100%, 640px);
       opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
+      transform: scale(0.96);
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
 
-    .final-message.show {
+    .secret.show {
       opacity: 1;
-      transform: translateY(0);
+      transform: scale(1);
     }
 
-    .burst {
-      position: fixed;
-      font-size: 22px;
-      pointer-events: none;
-      animation: burst 1s ease forwards;
-      z-index: 20;
+    .secret strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 20px;
     }
 
-    @keyframes burst {
-      0% {
-        transform: translate(0, 0) scale(0.5);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(var(--dx), var(--dy)) scale(1.4);
-        opacity: 0;
-      }
+    .footer-note {
+      text-align: center;
+      margin-top: 28px;
+      color: rgba(255,255,255,0.72);
+      font-size: 14px;
     }
 
-    @media (max-width: 920px) {
-      .hero {
+    @media (max-width: 900px) {
+      .hero,
+      .grid {
         grid-template-columns: 1fr;
       }
-    }
 
-    @media (max-width: 620px) {
       .hero-copy,
-      .side-board,
-      .celebrate,
-      .question-stage {
-        padding: 20px;
+      .hero-card,
+      .surprise {
+        padding: 24px;
       }
 
-      .metrics {
+      .stats {
         grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <div class="sparkles" id="sparkles" aria-hidden="true"></div>
-  <div class="hearts-layer" id="heartsLayer" aria-hidden="true"></div>
+  <div class="floating-hearts" aria-hidden="true">
+    <span class="heart" style="left:6%; animation-duration: 10s; animation-delay: 0s;">❤</span>
+    <span class="heart" style="left:18%; animation-duration: 12s; animation-delay: 3s;">❤</span>
+    <span class="heart" style="left:31%; animation-duration: 11s; animation-delay: 1s;">❤</span>
+    <span class="heart" style="left:47%; animation-duration: 14s; animation-delay: 5s;">❤</span>
+    <span class="heart" style="left:63%; animation-duration: 12s; animation-delay: 2s;">❤</span>
+    <span class="heart" style="left:78%; animation-duration: 10s; animation-delay: 4s;">❤</span>
+    <span class="heart" style="left:90%; animation-duration: 13s; animation-delay: 1.5s;">❤</span>
+  </div>
 
   <main class="page">
     <section class="hero">
       <div class="panel hero-copy">
-        <div class="badge">تجربة حب تفاعلية</div>
-        <h1>هل تحبني؟</h1>
+        <div class="badge">رسالة خاصة من القلب</div>
+        <h1>أنتِ أجمل صدفة<br>وأصدق شعور في حياتي</h1>
         <p class="lead">
-          جاوب بصراحة... لكن انتبه، كل ضغطة على <strong>لا</strong> ستجعل
-          <strong>نعم</strong> أكبر وأقوى، بينما <strong>لا</strong> ستصغر
-          بالتدريج. وفي الجهة الأخرى ستشاهد عدد الإجابات المسجلة.
+          منذ أن عرفتكِ، صار لكل يوم معنى مختلف، وصارت التفاصيل العادية
+          أكثر دفئًا فقط لأنكِ موجودة فيها. هذه الصفحة ليست إلا محاولة صغيرة
+          لأقول لكِ شيئًا كبيرًا جدًا: أنا أحبكِ بصدق، وبهدوء، وبكل قلبي.
         </p>
-
-        <div class="question-stage">
-          <h2 class="question">هل تحبني؟</h2>
-          <div class="button-row">
-            <button class="yes-btn" id="yesBtn" type="button">نعم</button>
-            <button class="no-btn" id="noBtn" type="button">لا</button>
-          </div>
-          <div class="status" id="statusText">اختر إجابتك الآن</div>
+        <div class="actions">
+          <button class="primary" id="revealBtn">اضغطي لتري اعترافي</button>
+          <a class="ghost" href="#reasons">لماذا أنتِ مميزة؟</a>
         </div>
       </div>
 
-      <aside class="panel side-board">
-        <h2>إجابات الناس</h2>
-        <div class="metrics">
-          <div class="metric">
-            <strong id="yesCount">0</strong>
-            <span>ضغطوا نعم</span>
-          </div>
-          <div class="metric">
-            <strong id="noCount">0</strong>
-            <span>ضغطوا لا</span>
+      <aside class="panel hero-card">
+        <div>
+          <div class="mini-title">إلى من خطفت قلبي</div>
+          <div class="letter">
+            أحب فيكِ لطفكِ، وضحكتكِ، والطريقة التي تجعلين بها العالم أكثر
+            جمالًا دون أن تبذلي أي مجهود. قربكِ راحة، وحديثكِ طمأنينة،
+            ووجودكِ شيء يشبه الأمنيات حين تتحقق.
+            <div class="sign">بكل الحب... أنا</div>
           </div>
         </div>
 
-        <div class="people-list">
-          <h3>آخر الإجابات</h3>
-          <div id="answersList">
-            <p class="empty">لا توجد إجابات بعد. أول شخص سيظهر هنا.</p>
+        <div class="stats">
+          <div class="stat">
+            <strong>100%</strong>
+            صدق المشاعر
           </div>
-        </div>
-
-        <div class="actions">
-          <button class="tool primary" id="demoBtn" type="button">إضافة ردود تجريبية</button>
-          <button class="tool" id="clearBtn" type="button">مسح الإجابات</button>
+          <div class="stat">
+            <strong>∞</strong>
+            إعجاب لا ينتهي
+          </div>
+          <div class="stat">
+            <strong>1</strong>
+            أنتِ فقط
+          </div>
         </div>
       </aside>
     </section>
 
-    <section class="panel celebrate">
-      <h2>كل الطرق تؤدي إلى نعم</h2>
-      <p>
-        أضفت مؤثرات بصرية ولمعانًا وقلوبًا متحركة حتى تبدو الصفحة ممتعة وأكثر
-        جاذبية، ومع كل تفاعل ستتجدد الحركة على الشاشة.
-      </p>
-      <div class="final-message" id="finalMessage">
-        الحب انتصر... وكانت الإجابة الأجمل هي نعم.
+    <section class="section" id="reasons">
+      <div class="grid">
+        <article class="card">
+          <h2>وجودكِ يغيّر كل شيء</h2>
+          <p>
+            حين تكونين قريبة، يصير اليوم أخف، والوقت أجمل، والقلب أكثر هدوءًا.
+            وكأن حضوركِ يضيف نورًا لكل ما حولي.
+          </p>
+        </article>
+        <article class="card">
+          <h2>تفاصيلكِ لا تُنسى</h2>
+          <p>
+            طريقتكِ في الكلام، ابتسامتكِ، وحتى أبسط ملامحكِ الصغيرة...
+            كلها أشياء علقت في قلبي بشكل لا أستطيع وصفه بالكامل.
+          </p>
+        </article>
+        <article class="card">
+          <h2>شعوري معكِ حقيقي</h2>
+          <p>
+            ليس إعجابًا عابرًا، بل شعور ناضج وصادق يجعلني أرغب بأن أكون
+            أفضل، فقط لأنكِ تستحقين حبًا جميلًا وواضحًا.
+          </p>
+        </article>
       </div>
     </section>
+
+    <section class="panel surprise">
+      <h3>هناك شيء أريد قوله لكِ</h3>
+      <p>
+        ربما تختصر هذه الكلمات كل ما في داخلي، وربما لا تكفي أبدًا... لكنني
+        سأقولها كما هي، بلا تردد.
+      </p>
+
+      <div class="secret" id="secretMessage" aria-live="polite">
+        <strong>اعترافي لكِ</strong>
+        أنا أحبكِ... أحب روحكِ، قربكِ، وأحب الشعور الذي يملأ قلبي كلما فكرت
+        فيكِ. وإن كان للحب اسم في حياتي، فهو أنتِ.
+      </div>
+    </section>
+
+    <div class="footer-note">
+      يمكنك تعديل النص باسمها أو بإضافة ذكرياتكما الخاصة بسهولة من داخل الملف.
+    </div>
   </main>
 
   <script>
-    const storageKey = "love_question_answers_v1";
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const yesCount = document.getElementById("yesCount");
-    const noCount = document.getElementById("noCount");
-    const answersList = document.getElementById("answersList");
-    const statusText = document.getElementById("statusText");
-    const finalMessage = document.getElementById("finalMessage");
-    const demoBtn = document.getElementById("demoBtn");
-    const clearBtn = document.getElementById("clearBtn");
-    const sparkles = document.getElementById("sparkles");
-    const heartsLayer = document.getElementById("heartsLayer");
+    const revealBtn = document.getElementById("revealBtn");
+    const secretMessage = document.getElementById("secretMessage");
 
-    let noPressStreak = 0;
-
-    function initBackground() {
-      for (let index = 0; index < 18; index += 1) {
-        const star = document.createElement("span");
-        star.className = "sparkle";
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.animationDelay = `${Math.random() * 6}s`;
-        star.style.animationDuration = `${4 + Math.random() * 4}s`;
-        sparkles.appendChild(star);
-      }
-
-      for (let index = 0; index < 10; index += 1) {
-        const heart = document.createElement("span");
-        heart.className = "float-heart";
-        heart.textContent = "❤";
-        heart.style.left = `${Math.random() * 100}%`;
-        heart.style.animationDelay = `${Math.random() * 9}s`;
-        heart.style.animationDuration = `${9 + Math.random() * 5}s`;
-        heartsLayer.appendChild(heart);
-      }
-    }
-
-    function readAnswers() {
-      try {
-        return JSON.parse(localStorage.getItem(storageKey)) || [];
-      } catch (error) {
-        return [];
-      }
-    }
-
-    function saveAnswers(answers) {
-      localStorage.setItem(storageKey, JSON.stringify(answers));
-    }
-
-    function formatDate(dateString) {
-      return new Date(dateString).toLocaleString("ar-MA", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-      });
-    }
-
-    function addAnswer(answer) {
-      const answers = readAnswers();
-      answers.unshift({
-        answer,
-        createdAt: new Date().toISOString()
-      });
-      saveAnswers(answers);
-      renderBoard();
-    }
-
-    function renderBoard() {
-      const answers = readAnswers();
-      const yesTotal = answers.filter((item) => item.answer === "نعم").length;
-      const noTotal = answers.filter((item) => item.answer === "لا").length;
-
-      yesCount.textContent = yesTotal;
-      noCount.textContent = noTotal;
-
-      if (!answers.length) {
-        answersList.innerHTML = '<p class="empty">لا توجد إجابات بعد. أول شخص سيظهر هنا.</p>';
-        return;
-      }
-
-      answersList.innerHTML = answers.slice(0, 10).map((item, index) => `
-        <div class="entry">
-          <span>شخص ${answers.length - index}</span>
-          <span class="pill ${item.answer === "نعم" ? "yes" : "no"}">${item.answer}</span>
-          <span class="meta">الوقت: ${formatDate(item.createdAt)}</span>
-        </div>
-      `).join("");
-    }
-
-    function updateButtons() {
-      const yesScale = Math.min(1 + noPressStreak * 0.18, 2.8);
-      const noScale = Math.max(1 - noPressStreak * 0.14, 0.28);
-
-      yesBtn.style.transform = `scale(${yesScale})`;
-      noBtn.style.transform = `scale(${noScale})`;
-      yesBtn.style.minWidth = `${170 + noPressStreak * 24}px`;
-      yesBtn.style.minHeight = `${68 + noPressStreak * 10}px`;
-      yesBtn.style.fontSize = `${20 + noPressStreak * 2}px`;
-      noBtn.style.minWidth = "170px";
-      noBtn.style.minHeight = "68px";
-      noBtn.style.fontSize = "20px";
-      noBtn.style.opacity = `${Math.max(1 - noPressStreak * 0.12, 0.2)}`;
-
-      if (noPressStreak >= 5) {
-        statusText.textContent = "زر نعم صار مغريًا جدًا الآن...";
-      } else if (noPressStreak > 0) {
-        statusText.textContent = "لماذا لا؟ جرب نعم بدلًا منها";
-      } else {
-        statusText.textContent = "اختر إجابتك الآن";
-      }
-    }
-
-    function createBurst(x, y, symbol) {
-      for (let index = 0; index < 10; index += 1) {
-        const piece = document.createElement("span");
-        piece.className = "burst";
-        piece.textContent = symbol;
-        piece.style.left = `${x}px`;
-        piece.style.top = `${y}px`;
-        piece.style.setProperty("--dx", `${(Math.random() - 0.5) * 180}px`);
-        piece.style.setProperty("--dy", `${-40 - Math.random() * 140}px`);
-        document.body.appendChild(piece);
-        setTimeout(() => piece.remove(), 1000);
-      }
-    }
-
-    function clickCenter(element) {
-      const rect = element.getBoundingClientRect();
-      return {
-        x: rect.left + rect.width / 2,
-        y: rect.top + rect.height / 2
-      };
-    }
-
-    yesBtn.addEventListener("click", () => {
-      addAnswer("نعم");
-      noPressStreak = 0;
-      updateButtons();
-      statusText.textContent = "أجمل إجابة وصلت: نعم 🥰";
-      finalMessage.classList.add("show");
-      const point = clickCenter(yesBtn);
-      createBurst(point.x, point.y, "🥰");
+    revealBtn.addEventListener("click", () => {
+      secretMessage.classList.add("show");
+      revealBtn.textContent = "أحبكِ أكثر مما تصفين";
+      revealBtn.disabled = true;
     });
-
-    noBtn.addEventListener("click", () => {
-      addAnswer("لا");
-      noPressStreak += 1;
-      updateButtons();
-      const point = clickCenter(noBtn);
-      createBurst(point.x, point.y, "😭");
-
-      if (noPressStreak >= 7) {
-        noBtn.textContent = "صغيرة جدًا";
-      }
-
-      if (noPressStreak >= 9) {
-        noBtn.style.pointerEvents = "none";
-        statusText.textContent = "زر لا اختفى تقريبًا... بقيت نعم فقط 🥰";
-      } else {
-        statusText.textContent = "لا؟ هذا محزن فعلًا... 😭";
-      }
-    });
-
-    demoBtn.addEventListener("click", () => {
-      const now = Date.now();
-      const demoAnswers = [
-        { answer: "نعم", createdAt: new Date(now).toISOString() },
-        { answer: "لا", createdAt: new Date(now - 1000 * 60 * 4).toISOString() },
-        { answer: "نعم", createdAt: new Date(now - 1000 * 60 * 11).toISOString() },
-        { answer: "نعم", createdAt: new Date(now - 1000 * 60 * 17).toISOString() }
-      ];
-      saveAnswers([...demoAnswers, ...readAnswers()]);
-      renderBoard();
-    });
-
-    clearBtn.addEventListener("click", () => {
-      localStorage.removeItem(storageKey);
-      noPressStreak = 0;
-      yesBtn.textContent = "نعم";
-      noBtn.textContent = "لا";
-      noBtn.style.pointerEvents = "auto";
-      finalMessage.classList.remove("show");
-      updateButtons();
-      renderBoard();
-    });
-
-    initBackground();
-    updateButtons();
-    renderBoard();
   </script>
 </body>
 </html>
